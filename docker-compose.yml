@@ -1,0 +1,27 @@
+
+services:
+  db:
+    image: mysql:latest
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: admin_passapol
+      MYSQL_DATABASE: app_db
+      MYSQL_USER: passapol
+      MYSQL_PASSWORD: 123456
+    ports:
+      - "3306:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: pma
+    links:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    ports:
+      - 8081:80
+volumes:
+  dbdata:
